@@ -1,4 +1,4 @@
-package com.example.recebaa
+package br.edu.unoesc.pdm.recebaa
 
 import io.flutter.embedding.android.FlutterActivity
 
