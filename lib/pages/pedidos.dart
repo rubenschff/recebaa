@@ -15,7 +15,6 @@ class _PedidosPageState extends State<PedidosPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pedidos = pegarFotos();
   }

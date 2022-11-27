@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "866484609594",
+    "project_id": "recebaa-bfda3",
+    "storage_bucket": "recebaa-bfda3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866484609594:android:d04c32f38b66acae420b03",
+        "android_client_info": {
+          "package_name": "br.edu.unoesc.pdm.recebaa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866484609594-gvm2l4ftgsjma67c4pkf2r8oha9d9a3a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAMmmtvwSAM7gwbsmgb_Fzsz4sLJjtmEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866484609594-gvm2l4ftgsjma67c4pkf2r8oha9d9a3a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

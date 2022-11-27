@@ -1,17 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:recebaa/pages/home.dart';
-import 'package:recebaa/pages/register_page.dart';
+import 'package:recebaa/pages/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String email = '';
+class _RegisterPageState extends State<RegisterPage> {
+  final db = FirebaseFirestore.instance;
   String senha = '';
+  String email = '';
+  String nome = '';
+  String cpf = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,34 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(15.0),
                     child: Image.asset('assets/images/location128x128.png'),
                   ),
+                ),
+                TextField(
+                  onChanged: (text) {
+                    nome = text;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  onChanged: (text) {
+                    cpf = text;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'CPF',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
                 ),
                 TextField(
                   onChanged: (text) {
@@ -68,18 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     side: BorderSide(width: 2, color: Colors.orange),
                   ),
-                  onPressed: () {
-                    if (email == 'rubens@gmail.com' && senha == '1234') {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ),
-                      );
-                    } else {
-                      print('Login inválido');
-                    }
-                  },
-                  child: Text('Entrar'),
+                  onPressed: () {},
+                  child: Text('Cadastrar'),
                 ),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
@@ -91,12 +112,12 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => RegisterPage(),
+                        builder: (context) => LoginPage(),
                       ),
                     );
                   },
-                  child: Text('Registrar-se'),
-                ),
+                  child: Text('Voltar para o login'),
+                )
               ],
             ),
           ),

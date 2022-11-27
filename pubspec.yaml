@@ -38,6 +38,10 @@ dependencies:
   http: ^0.13.5
   flutter_native_splash: ^2.2.15
   sqflite: ^2.2.0+3
+  postgres: ^2.5.2
+  firebase_core: ^2.3.0
+  cloud_firestore: ^4.1.0
+  
 
 flutter_native_splash:
   color: "#FF9800"
