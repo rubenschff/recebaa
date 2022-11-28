@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:recebaa/pages/get_packages.dart';
+
 class PedidosPage extends StatefulWidget {
   const PedidosPage({super.key});
 
@@ -17,6 +19,7 @@ class _PedidosPageState extends State<PedidosPage> {
   String email = '';
   List<String> docIDs = [];
 
+  //Recupera a tabela do usuário
   Future getPedidos() async {
     User? user = await FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -24,6 +27,10 @@ class _PedidosPageState extends State<PedidosPage> {
         email = user.email!;
       });
     }
+  }
+
+  //recupera os coumentos relacionados ao usuario
+  Future getDocIDs() async {
     await FirebaseFirestore.instance.collection(email).get().then(
           (snapshot) => snapshot.docs.forEach(
             (document) {
@@ -35,71 +42,33 @@ class _PedidosPageState extends State<PedidosPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    // getUsuario();
-    getPedidos();
-    pedidos = pegarFotos();
-  }
-
-  @override
   Widget build(BuildContext context) {
     print(email);
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(
-          24.0,
-        ),
-        child: FutureBuilder<List>(
-          future: pedidos,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 15,
-                      childAspectRatio: 2),
-                  itemCount: docIDs.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: color),
-                      padding: EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          //Text(snapshot.data![index]['id'].toString()),
-                          //Text(snapshot.data![index]['title'].toString())
-                          SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: Card(
-                              color: Color.fromARGB(255, 255, 154, 2),
-                              child: Text(
-                                docIDs[index],
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          Text('argaerbgeargb')
-                        ],
-                      ),
+          padding: EdgeInsets.all(
+            24.0,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: FutureBuilder(
+                  future: getDocIDs(),
+                  builder: ((context, snapshot) {
+                    return ListView.builder(
+                      itemCount: docIDs.length,
+                      itemBuilder: ((context, index) {
+                        return ListTile(
+                          title: Pacotes(documentID: docIDs[index]),
+                        );
+                      }),
                     );
-                  });
-            } else if (snapshot.hasError) {
-              return const Center(
-                child: Text("Erro ao carregar pedidos"),
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
-      ),
+                  }),
+                ),
+              ),
+            ],
+          )),
     );
   }
 
