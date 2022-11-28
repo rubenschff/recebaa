@@ -16,22 +16,12 @@ class PedidosPage extends StatefulWidget {
 class _PedidosPageState extends State<PedidosPage> {
   late Future<List> pedidos;
   final Color color = Colors.grey.withOpacity(0.1);
-  String email = '';
+  String? email = FirebaseAuth.instance.currentUser!.email;
   List<String> docIDs = [];
-
-  //Recupera a tabela do usuário
-  Future getPedidos() async {
-    User? user = await FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      setState(() {
-        email = user.email!;
-      });
-    }
-  }
 
   //recupera os coumentos relacionados ao usuario
   Future getDocIDs() async {
-    await FirebaseFirestore.instance.collection(email).get().then(
+    await FirebaseFirestore.instance.collection(email!).get().then(
           (snapshot) => snapshot.docs.forEach(
             (document) {
               print(document.reference);
@@ -47,7 +37,7 @@ class _PedidosPageState extends State<PedidosPage> {
     return Scaffold(
       body: Padding(
           padding: EdgeInsets.all(
-            24.0,
+            15.0,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -70,15 +60,5 @@ class _PedidosPageState extends State<PedidosPage> {
             ],
           )),
     );
-  }
-
-  Future<List> pegarFotos() async {
-    var url = Uri.parse('https://jsonplaceholder.typicode.com/photos');
-    var response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body).map((foto) => foto).toList();
-    }
-    throw Exception("Erro ao carregar fotos");
   }
 }
