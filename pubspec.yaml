@@ -41,6 +41,7 @@ dependencies:
   postgres: ^2.5.2
   firebase_core: ^2.3.0
   cloud_firestore: ^4.1.0
+  firebase_auth: ^4.1.4
   
 
 flutter_native_splash:

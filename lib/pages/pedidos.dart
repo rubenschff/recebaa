@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,19 +14,38 @@ class PedidosPage extends StatefulWidget {
 class _PedidosPageState extends State<PedidosPage> {
   late Future<List> pedidos;
   final Color color = Colors.grey.withOpacity(0.1);
+  String email = '';
+  List<String> docIDs = [];
+
+  Future getPedidos() async {
+    User? user = await FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        email = user.email!;
+      });
+    }
+    await FirebaseFirestore.instance.collection(email).get().then(
+          (snapshot) => snapshot.docs.forEach(
+            (document) {
+              print(document.reference);
+              docIDs.add(document.reference.id);
+            },
+          ),
+        );
+  }
 
   @override
   void initState() {
     super.initState();
+    // getUsuario();
+    getPedidos();
     pedidos = pegarFotos();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(email);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Pedidos"),
-      ),
       body: Padding(
         padding: EdgeInsets.all(
           24.0,
@@ -35,11 +56,11 @@ class _PedidosPageState extends State<PedidosPage> {
             if (snapshot.hasData) {
               return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                      crossAxisCount: 1,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15,
-                      childAspectRatio: 1),
-                  itemCount: 4,
+                      childAspectRatio: 2),
+                  itemCount: docIDs.length,
                   itemBuilder: (context, index) {
                     return Container(
                       decoration: BoxDecoration(
@@ -58,12 +79,12 @@ class _PedidosPageState extends State<PedidosPage> {
                             child: Card(
                               color: Color.fromARGB(255, 255, 154, 2),
                               child: Text(
-                                snapshot.data![index]['id'].toString(),
+                                docIDs[index],
                                 textAlign: TextAlign.center,
                               ),
                             ),
                           ),
-                          Text(snapshot.data![index]['title'].toString())
+                          Text('argaerbgeargb')
                         ],
                       ),
                     );

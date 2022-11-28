@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:recebaa/pages/home.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recebaa/pages/login_page.dart';
-import 'package:recebaa/pages/register_page.dart';
+import 'package:recebaa/pages/page_state.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: const RegisterPage(),
+      home: const CheckPage(),
     );
   }
 }

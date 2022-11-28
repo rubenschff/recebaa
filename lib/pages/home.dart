@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recebaa/pages/pedidos.dart';
 import 'package:recebaa/pages/usuario.dart';
+
+import 'login_page.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -28,6 +31,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Recebaa'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            tooltip: 'Sair',
+            onPressed: () {
+              sair();
+            },
+          ),
+        ],
+      ),
       body: PageView(
         controller: pc,
         children: [
@@ -53,5 +68,15 @@ class _HomeState extends State<Home> {
         },
       ),
     );
+  }
+
+  sair() async {
+    await FirebaseAuth.instance.signOut().then(
+          (user) => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => LoginPage(),
+            ),
+          ),
+        );
   }
 }

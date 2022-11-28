@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:recebaa/pages/home.dart';
 import 'package:recebaa/pages/login_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,11 +11,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final db = FirebaseFirestore.instance;
-  String senha = '';
-  String email = '';
-  String nome = '';
-  String cpf = '';
+  final _nome = TextEditingController();
+  final _senha = TextEditingController();
+  final _email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +36,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 TextField(
-                  onChanged: (text) {
-                    nome = text;
-                  },
+                  controller: _nome,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Nome',
+                    labelText: 'Nome completo',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -51,23 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 15,
                 ),
                 TextField(
-                  onChanged: (text) {
-                    cpf = text;
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: 'CPF',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                TextField(
-                  onChanged: (text) {
-                    email = text;
-                  },
+                  controller: _email,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Email',
@@ -79,9 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 15,
                 ),
                 TextField(
-                  onChanged: (text) {
-                    senha = text;
-                  },
+                  controller: _senha,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Senha',
@@ -99,7 +78,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     side: BorderSide(width: 2, color: Colors.orange),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    cadastrar();
+                  },
                   child: Text('Cadastrar'),
                 ),
                 OutlinedButton(
@@ -124,5 +105,35 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  cadastrar() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _email.text, password: _senha.text);
+      if (userCredential != null) {
+        userCredential.user!.updateDisplayName(_nome.text);
+        Navigator.pushAndRemoveUntil((context),
+            MaterialPageRoute(builder: (context) => Home()), (route) => false);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Senha deve ter no mínimo 6 digitos'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Email ja cadastrado'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
+    ;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recebaa/pages/home.dart';
 import 'package:recebaa/pages/register_page.dart';
@@ -10,8 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email = '';
-  String senha = '';
+  final _email = TextEditingController();
+  final _senha = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 TextField(
-                  onChanged: (text) {
-                    email = text;
-                  },
+                  controller: _email,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: 'Email',
@@ -48,9 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 15,
                 ),
                 TextField(
-                  onChanged: (text) {
-                    senha = text;
-                  },
+                  controller: _senha,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Senha',
@@ -69,15 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                     side: BorderSide(width: 2, color: Colors.orange),
                   ),
                   onPressed: () {
-                    if (email == 'rubens@gmail.com' && senha == '1234') {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ),
-                      );
-                    } else {
-                      print('Login inválido');
-                    }
+                    login();
                   },
                   child: Text('Entrar'),
                 ),
@@ -103,5 +92,36 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  login() async {
+    try {
+      // ignore: unused_local_variable
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email.text, password: _senha.text);
+      if (credential != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuário não encontrado'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Senha Incorreta'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
   }
 }
