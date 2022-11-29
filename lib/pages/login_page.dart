@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recebaa/pages/home.dart';
 import 'package:recebaa/pages/register_page.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -38,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: AppLocalizations.of(context)?.email,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -50,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _senha,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Senha',
+                    labelText: AppLocalizations.of(context)?.password,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -68,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     login();
                   },
-                  child: Text('Entrar'),
+                  child: Text(AppLocalizations.of(context)!.loginLogin),
                 ),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
@@ -84,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     );
                   },
-                  child: Text('Registrar-se'),
+                  child: Text(AppLocalizations.of(context)!.loginRegister),
                 ),
               ],
             ),
@@ -108,19 +110,57 @@ class _LoginPageState extends State<LoginPage> {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Usuário não encontrado'),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
+        showDialog(
+            context: context,
+            builder: (builder) {
+              return AlertDialog(
+                title: Text(
+                  AppLocalizations.of(context)!.userNotFound,
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      side: BorderSide(width: 2, color: Colors.orange),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.close,
+                    ),
+                  ),
+                ],
+              );
+            });
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Senha Incorreta'),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
+        showDialog(
+            context: context,
+            builder: (builder) {
+              return AlertDialog(
+                title: Text(
+                  AppLocalizations.of(context)!.wrongPassword,
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      side: BorderSide(width: 2, color: Colors.orange),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.close,
+                    ),
+                  ),
+                ],
+              );
+            });
       }
     }
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recebaa/pages/home.dart';
 import 'package:recebaa/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -39,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _nome,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Nome completo',
+                    labelText: AppLocalizations.of(context)?.fullName,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -51,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Email',
+                    labelText: AppLocalizations.of(context)?.email,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -63,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _senha,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Senha',
+                    labelText: AppLocalizations.of(context)?.password,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -81,7 +83,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   onPressed: () {
                     cadastrar();
                   },
-                  child: Text('Cadastrar'),
+                  child: Text(
+                    AppLocalizations.of(context)!.register,
+                  ),
                 ),
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
@@ -97,7 +101,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     );
                   },
-                  child: Text('Voltar para o login'),
+                  child: Text(
+                    AppLocalizations.of(context)!.comebackLogin,
+                  ),
                 )
               ],
             ),
@@ -119,18 +125,58 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Senha deve ter no mínimo 6 digitos'),
-            backgroundColor: Colors.redAccent,
-          ),
+        showDialog(
+          context: context,
+          builder: (builder) {
+            return AlertDialog(
+              title: Text(
+                AppLocalizations.of(context)!.weakPassword,
+              ),
+              actions: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    side: BorderSide(width: 2, color: Colors.orange),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.close,
+                  ),
+                ),
+              ],
+            );
+          },
         );
       } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Email ja cadastrado'),
-            backgroundColor: Colors.redAccent,
-          ),
+        showDialog(
+          context: context,
+          builder: (builder) {
+            return AlertDialog(
+              title: Text(
+                AppLocalizations.of(context)!.emailAlreadyInUse,
+              ),
+              actions: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    side: BorderSide(width: 2, color: Colors.orange),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context)!.close,
+                  ),
+                ),
+              ],
+            );
+          },
         );
       }
     }

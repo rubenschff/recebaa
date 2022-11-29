@@ -1,0 +1,22 @@
+{
+    "loginLogin": "Login",
+    "loginRegister" : "Registrar-se",
+    "email": "E-mail",
+    "password": "Senha",
+    "fullName" : "Nome Completo",
+    "register" : "Cadastrar",
+    "comebackLogin": "Voltar para o login",
+    "weakPassword":"Senha deve ter no mínimo 6 digitos",
+    "emailAlreadyInUse": "E-mail ja cadastrado",
+    "close":"Fechar",
+    "userNotFound":"Usuário não encontrado",
+    "wrongPassword":"Senha incorreta",
+    "buttonpackages": "Pedidos",
+    "buttonAccount": "Perfil",
+    "buttonSeeInMap": "Ver no mapa",
+    "accountInfos": "Conectado como",
+    "name": "Nome",
+    "loading": "Carregando"
+
+
+ }

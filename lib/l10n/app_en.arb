@@ -1,0 +1,21 @@
+{
+   "loginLogin": "SignIn",
+   "loginRegister" : "SignUp",
+   "email": "E-mail",
+   "password": "Password",
+   "fullName" : "Full Name",
+   "register" : "Register",
+    "comebackLogin": "Back to login",
+    "weakPassword":"Password must have at least 6 characters",
+    "emailAlreadyInUse": "E-mail already registered",
+    "close":"Close",
+    "userNotFound":"User not found",
+    "wrongPassword":"Wrong password",
+    "buttonpackages": "Packages",
+    "buttonAccount": "Profile",
+    "buttonSeeInMap": "See on map",
+    "accountInfos": "Logged as",
+    "name": "Name",
+    "loading": "Loading"
+    
+}

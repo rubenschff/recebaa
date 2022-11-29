@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recebaa/pages/pedidos.dart';
 import 'package:recebaa/pages/usuario.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'login_page.dart';
 
@@ -55,9 +57,13 @@ class _HomeState extends State<Home> {
         currentIndex: paginaAtual,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.local_shipping), label: 'Pedidos'),
+            icon: Icon(Icons.local_shipping),
+            label: AppLocalizations.of(context)!.buttonpackages,
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), label: 'Perfil')
+            icon: Icon(Icons.account_circle),
+            label: AppLocalizations.of(context)!.buttonAccount,
+          )
         ],
         onTap: (pagina) {
           pc.animateToPage(

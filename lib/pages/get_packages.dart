@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Pacotes extends StatelessWidget {
   final String documentID;
@@ -19,10 +21,11 @@ class Pacotes extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data =
               snapshot.data!.data() as Map<String, dynamic>;
+          print(data);
           return Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.grey.withOpacity(1)),
+                color: Colors.grey.withOpacity(0.1)),
             padding: EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,34 +33,51 @@ class Pacotes extends StatelessWidget {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 35,
                   child: Card(
-                    color: Color.fromARGB(255, 255, 154, 2),
                     child: Text(
                       data['nomeProduto'],
-                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: 20,
+                  height: 25,
                   child: Card(
-                    child: Text(data['latitude']),
+                    color: Color.fromARGB(255, 255, 154, 2),
+                    child: Text('Latitude: ' + data['latitude']),
                   ),
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: 20,
+                  height: 25,
                   child: Card(
-                    child: Text(data['longitude']),
+                    color: Color.fromARGB(255, 255, 154, 2),
+                    child: Text('Longitude: ' + data['longitude']),
                   ),
-                )
+                ),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    side: BorderSide(width: 2, color: Colors.orange),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    AppLocalizations.of(context)!.buttonSeeInMap,
+                  ),
+                ),
               ],
             ),
           );
         }
-        return Text('Loading');
+        return Text(
+          AppLocalizations.of(context)!.loading,
+        );
       }),
     );
   }
