@@ -70,8 +70,8 @@ class Pacotes extends StatelessWidget {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => MapsPage(
                         nomeProduto: data['nomeProduto'],
-                        latitude: double.parse(data['latitude']),
-                        longitude: double.parse(data['longitude']),
+                        latitude: data['latitude'],
+                        longitude: data['longitude'],
                       ),
                     ));
                   },

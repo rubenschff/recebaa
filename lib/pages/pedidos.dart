@@ -33,7 +33,6 @@ class _PedidosPageState extends State<PedidosPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(email);
     return Scaffold(
       body: Padding(
           padding: EdgeInsets.all(
