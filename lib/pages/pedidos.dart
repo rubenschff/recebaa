@@ -21,10 +21,10 @@ class _PedidosPageState extends State<PedidosPage> {
 
   //recupera os coumentos relacionados ao usuario
   Future getDocIDs() async {
+    docIDs.clear();
     await FirebaseFirestore.instance.collection(email!).get().then(
           (snapshot) => snapshot.docs.forEach(
             (document) {
-              print(document.reference);
               docIDs.add(document.reference.id);
             },
           ),

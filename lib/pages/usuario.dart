@@ -19,68 +19,70 @@ class _UsuarioPageState extends State<UsuarioPage> {
 
     return Container(
       padding: EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Card(
-            elevation: 30,
-            shadowColor: Colors.black,
-            color: Colors.blueGrey[200],
-            child: SizedBox(
-              width: 300,
-              height: 550,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.orange[500],
-                      radius: 108,
-                      child: const CircleAvatar(
-                        radius: 100,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Card(
+              elevation: 30,
+              shadowColor: Colors.black,
+              color: Colors.blueGrey[200],
+              child: SizedBox(
+                width: 300,
+                height: 530,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.orange[500],
+                        radius: 108,
+                        child: const CircleAvatar(
+                          radius: 100,
+                        ), //CircleAvatar
                       ), //CircleAvatar
-                    ), //CircleAvatar
-                    const SizedBox(
-                      height: 20,
-                    ), //SizedBox
-                    Text(
-                      AppLocalizations.of(context)!.accountInfos,
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ), //Textstyle
-                    ), //Text
-                    const SizedBox(
-                      height: 20,
-                    ), //SizedBox
-                    Text(
-                      AppLocalizations.of(context)!.email + ': ${email!}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ), //Textstyle
-                    ), //Text
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.name + ': ${user!}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ), //Textstyle
-                    ), //SizedBox
-                    SizedBox(
-                      width: 100,
-                    ) //SizedBox
-                  ],
-                ), //Column
-              ), //Padding
-            ), //SizedBox
-          ),
-        ],
+                      const SizedBox(
+                        height: 20,
+                      ), //SizedBox
+                      Text(
+                        '${user!}',
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ), //Textstyle
+                      ), //Text
+                      const SizedBox(
+                        height: 25,
+                      ), //SizedBox
+                      Text(
+                        AppLocalizations.of(context)!.email + ':',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ), //Textstyle
+                      ), //Text
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        ' ${email!}',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ), //Textstyle
+                      ), //SizedBox
+                      SizedBox(
+                        width: 100,
+                      ) //SizedBox
+                    ],
+                  ), //Column
+                ), //Padding
+              ), //SizedBox
+            ),
+          ],
+        ),
       ),
     );
     ;
