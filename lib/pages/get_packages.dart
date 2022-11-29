@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:recebaa/pages/maps.dart';
 
 class Pacotes extends StatelessWidget {
   final String documentID;
@@ -66,7 +66,15 @@ class Pacotes extends StatelessWidget {
                     ),
                     side: BorderSide(width: 2, color: Colors.orange),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => MapsPage(
+                        nomeProduto: data['nomeProduto'],
+                        latitude: double.parse(data['latitude']),
+                        longitude: double.parse(data['longitude']),
+                      ),
+                    ));
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.buttonSeeInMap,
                   ),
